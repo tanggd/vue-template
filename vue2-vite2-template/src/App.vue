@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1 :class="styles.title">{{ msg }}
-      <span :class="styles.span">222</span>
+      <span :class="styles.span">小标题</span>
     </h1>
     <nav>
       <router-link to="/home">Home</router-link> | 
@@ -14,7 +14,6 @@
 <script lang='ts'>
 import { defineComponent, ref } from '@vue/composition-api'
 import styles from './app.module.scss'
-import './app.scss'
 export default defineComponent({
   name: 'App',
   setup() {

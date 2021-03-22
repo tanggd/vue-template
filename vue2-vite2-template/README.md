@@ -395,9 +395,62 @@ npm install sass -D
 
 至此我们便可以支持.scss、.sass文件。
 
-当然我们还可以通过在文件扩展名前加上 `.module` 来结合使用 CSS modules 和预处理器，例如 `style.module.scss`。
+当然我们还可以通过在文件扩展名前加上 `.module` 来结合使用 CSS modules 和预处理器，例如 `app.module.scss`。
 
-TODO：解决.scss文件模块找不到的问题
+在app.vue中引入`app.module.scss`
+
+```html
+<template>
+  <div>
+    <h1 :class="styles.title">{{ msg }}
+      <span :class="styles.span">小标题</span>
+    </h1>
+    <nav>
+      <router-link to="/home">Home</router-link> | 
+      <router-link to="/about">About</router-link>
+    </nav>
+    <router-view></router-view>
+  </div>
+</template>
+
+<script lang='ts'>
+import { defineComponent, ref } from '@vue/composition-api'
+import styles from './app.module.scss'
+export default defineComponent({
+  name: 'App',
+  setup() {
+    const msg = ref('Hello Vite2')
+    return {
+      msg,
+      styles
+    }
+  },
+})
+</script>
+```
+
+在app.vue中引入`app.module.scss`，发现vscode插件Vetur提示：找不到`app.module.scss`模块。我们可以增加类型文件
+
+在src目录下新建type-css.d.ts
+
+```typescript
+declare module '*.module.css' {
+  const modulecss: { readonly [key: string]: string }
+  export default modulecss
+}
+
+declare module '*.module.sass' {
+  const modulecss: { readonly [key: string]: string }
+  export default modulecss
+}
+
+declare module '*.module.scss' {
+  const modulecss: { readonly [key: string]: string }
+  export default modulecss
+}
+```
+
+
 
 ### 增加类型文件
 
